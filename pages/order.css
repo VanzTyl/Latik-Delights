@@ -1,0 +1,569 @@
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Root variables for colors */
+:root {
+    --primary: #55844E; /* Dark Green - Sidebar background, main buttons */
+    --secondary: #FFFFFF; /* White - General background, card background */
+    --accent: #67A15F; /* Medium Green - Accent color, table borders */
+    --background: #F0F0F0; /* Light Gray - Page background */
+    --light-green: #cee5cb; /* Very Light Green - Products section background */
+    --dark-text: #333333; /* Dark text color */
+}
+
+body{
+    background-color: var(--background);
+}
+
+/* Main container to hold the content and sidebar */
+.main {
+    display: flex;
+    height: 100vh;
+    background-color: var(--background);
+    padding-left: 250px; /* Leave space for sidebar */
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 250px;
+    background-color: var(--primary);
+    color: var(--secondary);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.sidebar h2 {
+    color: var(--secondary);
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+/* Welcome Section Style */
+#welcome-section {
+    margin-bottom: 20px;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Sidebar buttons */
+.sidebar-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 25%;
+}
+
+.sidebar-btn {
+    background-color: var(--secondary);
+    color: var(--primary);
+    border: 1px solid var(--secondary);
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-weight: 500;
+}
+
+.sidebar-btn:hover {
+    background-color: var(--accent);
+    color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.active-btn {
+    background-color: var(--accent) !important;
+    color: var(--secondary) !important;
+    border-color: var(--secondary) !important;
+}
+
+/* Log Out Button Style - Reverting to primary theme */
+.log-out-btn {
+    margin-top: 30px;
+    background-color: var(--secondary); 
+    color: var(--primary);
+    border-color: var(--secondary);
+}
+
+.log-out-btn:hover {
+    background-color: var(--accent);
+    color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+
+/* Content styles */
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: var(--background);
+    /* NEW: Use Flexbox to manage the two columns */
+    display: flex;
+    gap: 20px; /* Space between the two columns */
+}
+
+/* Content Box (Left Column: Products List) */
+.content-box {
+    /* NEW: Take up 65% of the content width */
+    width: 65%;
+    background-color: var(--secondary);
+    min-height: calc(100vh - 40px); 
+    padding: 0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+/* Content Header */
+.content-header {
+    width: 100%;
+    background-color: var(--primary);
+    color: var(--secondary);
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.content-header-title h3 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+/* --- Order Summary (Right Column) --- */
+.order-summary-box {
+    /* NEW: Take up 35% of the content width */
+    width: 35%;
+    background-color: var(--secondary);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Header for the Summary Box */
+.summary-header {
+    background-color: var(--primary);
+    color: var(--secondary);
+    padding: 20px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* Body of the Summary Box */
+.summary-body {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: var(--secondary);
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--background);
+}
+
+.cart-item-details {
+    flex-grow: 1;
+}
+
+.cart-item-details h6 {
+    font-size: 1rem;
+    color: var(--dark-text);
+    margin: 0;
+}
+
+.cart-item-details span {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.item-quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-right: 10px;
+}
+
+.item-quantity-controls button {
+    background-color: var(--accent);
+    color: var(--secondary);
+    border: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.item-quantity-controls button:hover {
+    background-color: var(--primary);
+}
+
+.cart-item-price {
+    font-weight: 600;
+    color: var(--primary);
+    min-width: 60px; /* Ensure price column aligns */
+    text-align: right;
+}
+
+/* Footer Section */
+.summary-footer {
+    padding: 20px;
+    background-color: var(--light-green);
+    border-top: 1px solid var(--accent);
+}
+
+/* --- Customer Input Styling --- */
+.summary-footer .customer-input-container {
+    margin-top: 5px; /* Added slight top margin for space from the summary body */
+    margin-bottom: 15px; /* Space before the total */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.summary-footer .customer-input-container label {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.summary-footer .customer-input-container input {
+    padding: 10px 15px;
+    background-color: var(--secondary);
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--dark-text);
+}
+
+.summary-footer .customer-input-container input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
+}
+/* --- END UPDATED CUSTOMER INPUT --- */
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--primary);
+}
+
+.checkout-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--primary);
+    color: var(--secondary);
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.checkout-btn:hover {
+    background-color: var(--accent);
+}
+
+.empty-cart-message {
+    text-align: center;
+    color: #666;
+    padding: 50px 0;
+}
+
+/* Filter Section */
+.filter-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--secondary);
+    border-bottom: 1px solid var(--background);
+}
+
+/* Search Input */
+.search-input-container {
+    flex-grow: 1;
+    margin-right: 20px;
+}
+
+#product-search {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+#product-search:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* Dropdown styles */
+.filter-options {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 20px;
+}
+
+.filter-options label {
+    font-weight: 500;
+    color: var(--dark-text);
+}
+
+.filter-options select {
+    padding: 10px 15px;
+    font-size: 1rem;
+    background-color: var(--primary);
+    color: var(--secondary);
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    cursor: pointer;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="white" d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+}
+
+/* View Toggle Buttons styling */
+.view-toggle {
+    display: flex;
+    gap: 10px;
+}
+
+.view-toggle button {
+    background-color: var(--accent);
+    color: var(--secondary);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.view-toggle button:hover {
+    background-color: var(--primary);
+}
+
+.view-toggle .active-view {
+    background-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--accent), 0 0 0 4px var(--primary);
+}
+
+
+/* Products Section */
+.primary-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/* Products Header */
+.content-container-section-header {
+    background-color: var(--accent);
+    color: var(--secondary);
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+/* 🟢 FIX APPLIED HERE: Adjust padding to allow light green background to fill completely. */
+.products-content {
+    background-color: var(--light-green);
+    padding: 0 20px 20px 20px; /* Removed top padding, kept horizontal/bottom padding */
+    flex-grow: 1;
+    height: calc(100vh - 350px);
+    overflow-y: auto; /* Enable scrolling for products */
+}
+
+/* Table View */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--secondary);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px; /* Added margin to push the table down from the header */
+}
+
+table th, table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--background);
+    color: var(--dark-text);
+}
+
+table th {
+    background-color: var(--primary);
+    color: var(--secondary);
+    font-weight: 600;
+}
+
+.add-to-cart-table-btn {
+    background-color: var(--accent);
+    color: var(--secondary);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-cart-table-btn:hover {
+    background-color: var(--primary);
+}
+
+/* Hide the inactive view (either Table or Card) */
+.hidden {
+    display: none !important;
+}
+
+/* Card View Styling (Grid) */
+.product-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Slightly wider cards */
+    gap: 20px;
+    padding: 20px 0 0 0; /* Added top padding here since it was removed from .products-content */
+}
+
+.product-card {
+    background-color: var(--secondary);
+    padding: 15px; /* Reduced padding slightly to save space */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Ensure content is spaced out nicely */
+}
+
+.product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* **FIX FOR ALIGNMENT:** Ensure headers have fixed spacing/height */
+.product-card h5 {
+    font-size: 1.2rem; /* Consistent font size */
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 10px;
+    min-height: 2.4rem; /* Set a min-height for two lines of text */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* New Image Styling */
+.product-image {
+    width: 100%;
+    height: 120px; /* Fixed height for consistent look */
+    background-color: var(--light-green); /* Placeholder background */
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: var(--primary);
+    overflow: hidden; /* Hide overflow if a real image is inserted */
+    border: 1px solid var(--accent);
+}
+
+.product-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--dark-text);
+    margin: 5px 0 2px 0;
+}
+
+.product-stock {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.add-to-cart-card-btn {
+    background-color: var(--primary);
+    color: var(--secondary);
+    padding: 12px 0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: auto; /* Pushes the button to the bottom of the card */
+}
+
+.add-to-cart-card-btn:hover {
+    background-color: var(--accent);
+}
+
+/* --- REVISED: Toast Notification Styling --- */
+.toast-notification {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* MODIFIED STYLES */
+    background-color: var(--secondary); /* White background */
+    color: var(--primary); /* Dark Green text */
+    border: 1px solid var(--primary); /* Dark Green border */
+    
+    padding: 15px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-size: 1.1rem;
+    font-weight: 600;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}

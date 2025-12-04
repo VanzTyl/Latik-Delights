@@ -1,0 +1,354 @@
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Root variables for colors */
+:root {
+    --primary: #55844E; /* Dark Green - Sidebar background, main buttons, borders */
+    --secondary: #FFFFFF; /* White - General background, card background */
+    --accent: #67A15F; /* Medium Green - Accent color, table borders */
+    --background: #F0F0F0; /* Light Gray - Page background */
+    --light-green: #cee5cb; /* Very Light Green - Orders section background */
+    --dark-text: #333333; /* Dark text color */
+    
+    /* NEW COLORS FOR BADGES */
+    --status-pending: #2c6abd; /* Deep Blue for Pending Payment */
+    --status-processing: #F39C12; /* Dark Yellow/Amber for Processing */
+    --status-cancelled: #C0392B; /* Deep Red for Cancelled */
+    --table-header-height: 50px; /* Define header height for calculation */
+}
+
+body {
+    background-color: var(--background);
+}
+
+/* =================================================================
+   1. MAIN LAYOUT AND SIDEBAR
+   ================================================================= */
+
+/* Main container to hold the content and sidebar */
+.main {
+    display: flex;
+    height: 100vh;
+    background-color: var(--background);
+    padding-left: 250px; /* Leave space for sidebar */
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 250px;
+    background-color: var(--primary);
+    color: var(--secondary);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.sidebar h2 {
+    color: var(--secondary);
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+#welcome-section {
+    margin-bottom: 20px;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+}
+
+.sidebar-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 25%;
+}
+
+.sidebar-btn {
+    background-color: var(--secondary);
+    color: var(--primary);
+    border: 1px solid var(--secondary);
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-weight: 500;
+}
+
+.sidebar-btn:hover {
+    background-color: var(--accent);
+    color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.active-btn {
+    background-color: var(--accent) !important;
+    color: var(--secondary) !important;
+    border-color: var(--secondary) !important;
+}
+
+.log-out-btn {
+    margin-top: 30px;
+    background-color: var(--secondary); 
+    color: var(--primary);
+    border-color: var(--secondary);
+}
+
+.log-out-btn:hover {
+    background-color: var(--accent);
+    color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+/* =================================================================
+   2. MAIN CONTENT CONTAINER
+   ================================================================= */
+
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column; 
+    gap: 20px; 
+}
+
+/* Content Box (Main area for the order table) */
+.content-box {
+    width: 100%; 
+    background-color: var(--secondary);
+    min-height: calc(100vh - 40px); 
+    padding: 0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Content Header */
+.content-header {
+    width: 100%;
+    background-color: var(--primary);
+    color: var(--secondary);
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.content-header-title h3 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+/* =================================================================
+   3. FILTER AND SEARCH SECTION
+   ================================================================= */
+
+.filter-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--secondary);
+    border-bottom: 1px solid var(--background);
+}
+
+.search-input-container {
+    flex-grow: 1;
+    margin-right: 20px;
+}
+
+#order-search { 
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+#order-search:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.status-filters {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.status-btn {
+    background-color: var(--background); 
+    color: var(--dark-text);
+    border: 1px solid var(--accent);
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.status-btn:hover {
+    background-color: var(--light-green);
+}
+
+.active-status-btn {
+    background-color: var(--primary) !important;
+    color: var(--secondary) !important;
+    border-color: var(--primary) !important;
+}
+
+/* =================================================================
+   4. ORDERS TABLE AND BADGES (SCROLLING FIX APPLIED HERE)
+   ================================================================= */
+
+.primary-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 0 20px 20px; /* Only padding on sides and bottom */
+}
+
+/* Container for the table area */
+.orders-content {
+    background-color: var(--secondary);
+    border-radius: 8px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    /* Removed padding and overflow-y from here to apply them to the inner scrolling element */
+}
+
+/* --- SCROLLING FIX: This container holds the rows and is scrollable --- */
+#table-body-scroll-container {
+    /* * Key to scrolling: Set a max-height (vh is viewport height).
+     * 50vh is an example, adjust this based on how much space you want
+     * the table to take up before scrolling starts.
+     */
+    max-height: 50vh; 
+    overflow-y: auto; /* KEY: Enables vertical scrolling for the body */
+    background-color: var(--secondary); /* Keep background consistent */
+}
+/* ------------------------------------------------------------------------ */
+
+/* Target both tables for consistent styling and width */
+#orders-header-table, #orders-body-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Helps keep column widths consistent */
+}
+
+#orders-header-table th, #orders-body-table td {
+    padding: 15px;
+    text-align: left;
+    color: var(--dark-text);
+}
+
+/* Styling for the fixed header */
+#orders-header-table th {
+    background-color: var(--primary);
+    color: var(--secondary);
+    font-weight: 600;
+    height: var(--table-header-height);
+}
+
+/* Styling for the rows */
+#orders-body-table td {
+    /* Only apply border to body cells */
+    border-bottom: 1px solid var(--background);
+}
+
+/* Remove the bottom border from the last row for a cleaner look */
+#orders-body-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* --- Status Badge Styling Template --- */
+.status-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    width: 200px; /* Adjusted width for badge consistency */
+    text-transform: uppercase;
+
+    /* BASE TEMPLATE: Secondary background, Primary border */
+    background-color: var(--secondary); 
+    border: 1px solid var(--primary);
+    color: var(--primary);
+}
+
+.status-cancelled{
+    background-color: var(--status-cancelled);
+    color: var(--secondary);
+    border: 1px solid var(--status-cancelled); 
+}
+
+.status-completed { 
+    background-color: var(--primary); 
+    color: var(--secondary); 
+    border: 1px solid var(--primary); 
+}
+
+.status-paid {
+    /* Uses Base Template */
+    color: var(--primary); 
+    border-color: var(--primary);
+}
+
+.status-processing {
+    /* Uses base background/border, changes text to the new Dark Yellow/Amber */
+    color: var(--status-processing); 
+    border-color: var(--status-processing);
+}
+
+.status-pending-payment {
+    /* Uses base background/border, changes text to the new Deep Red */
+    color: var(--status-pending); 
+    border-color: var(--status-pending);
+}
+
+/* Action Button (View/Edit Status) */
+.action-btn {
+    background-color: var(--primary);
+    color: var(--secondary);
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    appearance: none;
+    text-align: center;
+    margin-right: 5px; 
+}
+
+.action-btn:hover {
+    background-color: var(--accent);
+}
+
+.hidden {
+    display: none !important;
+}

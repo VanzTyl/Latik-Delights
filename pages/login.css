@@ -1,0 +1,111 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    font-family: "Poppins", sans-serif;
+}
+
+:root{
+    --primary: #55844E;
+    --secondary: #F0F0F0;
+    --accent: #67A15F;
+    --accent-opacity: 25%;
+    --background: #F0F0F0;
+}
+
+.main{
+    background-color: var(--background);
+}
+
+.filler:nth-child(1){
+    height: 5%;
+}
+
+.header{
+    background-color: var(--primary);
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header p{
+    height: max-content;
+    width: max-content;
+    color: var(--secondary);
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.login-container{
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 10%;
+    z-index: 3;
+}
+
+.login-box{
+    position: absolute;
+    height: 50%;
+    width: 350px;
+    background-color: #cee5cb;
+    border: 1.5px solid var(--primary);
+    border-radius: 25px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.login-box div:nth-child(1){
+    height: 12.5%;
+}
+.login-box div:nth-child(5){
+    height: 12.5%;
+}
+
+.input-box{
+    height: 25%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10%;
+}
+
+.button{
+    height: 25%;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.button button{
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    color: var(--primary);
+    background-color: var(--background);
+    border: 1px solid var(--primary);
+}
+
+.box{
+    background-color: var(--background);
+    border-radius: 10px;
+    width: 200px;
+    height: 50px;
+    border: 1px solid var(--primary);
+    padding-left: 5px;
+    font-size: 14px;
+}
+
+.label{
+    height: max-content;
+    width: 200px;
+    color: var(--primary);
+}

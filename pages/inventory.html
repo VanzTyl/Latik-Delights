@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management</title>
+    <link rel="stylesheet" href="order.css"> 
+    <link rel="stylesheet" href="inventory.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="main">
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <h2>Latik Delights</h2>
+                <div id="welcome-section">
+                    <p>Welcome! <span id="user-name"></span></p>
+                </div>
+                <div class="sidebar-buttons">
+                    <button class="sidebar-btn" id="create-order-btn">Create Order</button>
+                    <button class="sidebar-btn" id="manage-orders-btn">Manage Orders</button>
+                    <button class="sidebar-btn" id="sales-history-btn">Sales History</button>
+                    <button class="sidebar-btn active-btn" id="inventory-btn">Inventory</button>
+                    <button class="sidebar-btn log-out-btn" id="log-out-btn">Log Out</button> 
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="content-box">
+                <div class="content-header">
+                    <div class="content-header-title">
+                        <h3>Inventory Management Dashboard</h3>
+                    </div>
+                </div>
+                
+                <div class="primary-content">
+                    <div class="summary-cards-container">
+                        <div class="summary-card total-products">
+                            <i class="fas fa-boxes"></i>
+                            <h5>Total Products</h5>
+                            <p id="total-products-value">0</p>
+                        </div>
+                        <div class="summary-card total-in-stock">
+                            <i class="fas fa-check-circle"></i>
+                            <h5>Total In Stock</h5>
+                            <p id="in-stock-value">0</p>
+                        </div>
+                        <div class="summary-card low-stock">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h5>Low Stock Alert</h5>
+                            <p id="low-stock-value">0</p>
+                        </div>
+                    </div>
+
+                    <div class="filter-section">
+                        <div class="filter-controls">
+                            <div class="search-bar">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="product-search" placeholder="Search by Product Name or ID...">
+                            </div>
+                            
+                            <div class="inventory-actions">
+                                <button class="export-btn" id="manage-categories-btn" style="background-color: var(--in-stock-color);">
+                                    <i class="fas fa-tags"></i> Manage Categories
+                                </button>
+                                <button class="export-btn" id="export-btn">
+                                    <i class="fas fa-file-export"></i> Export
+                                </button>
+                                <button class="action-btn" id="add-product-btn">
+                                    <i class="fas fa-plus-circle"></i> Add Product
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-container-section-header">
+                        <h4>Product List</h4>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table id="inventory-header-table" class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Price (₱)</th>
+                                    <th>Stock</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        
+                        <div id="table-body-scroll-container">
+                            <table id="inventory-body-table" class="data-table">
+                                <tbody>
+                                    </tbody>
+                            </table>
+                            <p id="empty-inventory-message" class="hidden" style="text-align: center; padding: 20px;">No products found in the inventory.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="product-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h4 id="modal-title">Add New Product</h4>
+            <form id="product-form">
+                <input type="hidden" id="product-id">
+
+                <p>
+                    <label for="product-name">Product Name</label>
+                    <input type="text" id="product-name" required>
+                </p>
+                <p>
+                    <label for="product-category">Category</label>
+                    <select id="product-category" name="category_id" required> <option value="">Select Category</option>
+                        </select>
+                </p>
+                <p>
+                    <label for="product-price">Price (₱)</label>
+                    <input type="number" id="product-price" step="0.01" min="0" required>
+                </p>
+                <p>
+                    <label for="product-stock">Stock Quantity</label>
+                    <input type="number" id="product-stock" min="0" required>
+                </p>
+                
+                <button type="submit" class="action-btn">Save Product</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="category-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn category-close-btn">&times;</span>
+            <h4 id="category-modal-title">Manage Product Categories</h4>
+            
+            <form id="add-category-form" style="margin-bottom: 25px; border-bottom: 1px dashed var(--light-green); padding-bottom: 15px;">
+                <p>
+                    <label for="new-category-name">Add New Category</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="new-category-name" placeholder="Enter new category name" required style="margin: 0; flex-grow: 1;">
+                        <button type="submit" class="action-btn" style="padding: 5px 10px; height: 40px; white-space: nowrap;">
+                            <i class="fas fa-plus"></i> Add
+                        </button>
+                    </div>
+                </p>
+            </form>
+
+            <div class="category-list-container">
+                <p style="font-weight: 600; color: var(--primary);">Existing Categories:</p>
+                <ul id="category-list" style="list-style: none; padding: 0; max-height: 250px; overflow-y: auto;">
+                    </ul>
+            </div>
+            <p id="empty-categories-message" class="hidden" style="text-align: center; color: #6c757d; margin-top: 15px;">No categories found.</p>
+
+        </div>
+    </div>
+    <div id="delete-modal" class="modal hidden">
+        <div class="modal-content small-modal">
+            <span class="close-btn delete-close-btn">&times;</span>
+            <h4 id="delete-modal-title" style="color: var(--out-of-stock-color);">Confirm Deletion</h4>
+            <p style="margin-bottom: 25px;">Are you sure you want to delete <strong id="product-name-to-delete"></strong>? This action cannot be undone.</p>
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button class="action-btn" id="cancel-delete-btn" style="background-color: #6c757d;">Cancel</button>
+                <button class="action-btn" id="confirm-delete-btn" style="background-color: var(--out-of-stock-color);">
+                    <i class="fas fa-trash-alt"></i> Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container">
+        </div>
+
+
+    <script src="inventory.js"></script>
+    <script>
+        // --- Sidebar Navigation Logic (Consistent with other pages) ---
+        document.getElementById('create-order-btn').addEventListener('click', () => { window.location.href = 'order.html'; });
+        document.getElementById('manage-orders-btn').addEventListener('click', () => { window.location.href = 'manage_orders.html'; });
+        document.getElementById('sales-history-btn').addEventListener('click', () => { window.location.href = 'sales_history.html'; });
+        document.getElementById('inventory-btn').addEventListener('click', () => { window.location.href = 'inventory.html'; });
+        document.getElementById('log-out-btn').addEventListener('click', () => { window.location.href = '../controllers/logout.php'; });
+
+        // Session check script (Consistent with other pages)
+        fetch('/LatikDelights/controllers/check_session.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    document.getElementById('user-name').innerText = data.username;
+                } else {
+                    window.location.href = '/LatikDelights/pages/login.html';
+                }
+            })
+            .catch(error => {
+                console.log('Error checking session:', error);
+                window.location.href = '/LatikDelights/pages/login.html';
+            });
+    </script>
+</body>
+</html>

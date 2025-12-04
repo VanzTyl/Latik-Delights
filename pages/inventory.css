@@ -1,0 +1,628 @@
+/* Global styles and Root variables are assumed to be in a shared file like 'order.css' 
+   but for completeness, I'll include the necessary variables and core layout styles. */
+
+/* =================================================================
+   ROOT VARIABLES (Essential set)
+   ================================================================= */
+:root {
+    --primary: #55844E; /* Dark Green - Sidebar background, main buttons, borders */
+    --secondary: #FFFFFF; /* White - General background, card background */
+    --accent: #67A15F; /* Medium Green - Accent color, table borders */
+    --background: #F0F0F0; /* Light Gray - Page background */
+    --light-green: #cee5cb; /* Very Light Green */
+    --dark-text: #333333; /* Dark text color */
+    
+    /* Inventory Specific Colors */
+    --total-product-color: #007bff; /* Blue */
+    --in-stock-color: #28a745; /* Green */
+    --low-stock-color: #ffc107; /* Yellow */
+    --out-of-stock-color: #dc3545; /* Red (Danger) */
+    --table-header-height: 50px;
+    /* NEW: Toast Colors */
+    --toast-success: #28a745;
+    --toast-error: #dc3545;
+    --toast-info: #007bff;
+}
+
+body {
+    background-color: var(--background);
+}
+
+
+/* =================================================================
+   1. MAIN LAYOUT AND CORE CONTAINERS
+   (Unchanged from previous version)
+   ================================================================= */
+
+.main {
+    display: flex;
+    height: 100vh;
+    width: 100vw; 
+    background-color: var(--background);
+    padding-left: 250px; /* Space for sidebar */
+}
+
+/* --- SIDEBAR STYLES (Should be in order.css or similar) --- */
+.sidebar {
+    width: 250px;
+    background-color: var(--primary);
+    color: var(--secondary);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+/* --- CONTENT STYLES --- */
+.content {
+    flex: 1; 
+    padding: 20px;
+    background-color: var(--background);
+    display: flex; 
+    flex-direction: column; 
+    width: 100%; 
+}
+
+.content-box {
+    flex-grow: 1; 
+    width: 100%; 
+    background-color: var(--secondary);
+    min-height: calc(100vh - 40px); 
+    padding: 0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.content-header {
+    width: 100%;
+    background-color: var(--primary);
+    color: var(--secondary);
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.content-header-title h3 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.primary-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Allows this section to fill vertical space */
+    padding: 20px;
+}
+
+.content-container-section-header {
+    background-color: var(--primary); 
+    color: var(--secondary); 
+    margin-bottom: 0;
+    border-radius: 8px 8px 0 0;
+    padding: 15px 20px;
+}
+.content-container-section-header h4 {
+    margin: 0; 
+    font-size: 1.4rem;
+}
+
+
+/* =================================================================
+   2. SUMMARY CARDS 
+   (Unchanged from previous version)
+   ================================================================= */
+
+.summary-cards-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 10px 0;
+    flex-wrap: wrap; 
+    flex-shrink: 0; 
+}
+
+.summary-card {
+    background-color: var(--background); 
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex: 1;
+    min-width: 250px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.summary-card i {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+/* Color customization for Inventory cards */
+.summary-card:nth-child(1) i { color: var(--total-product-color); }
+.summary-card:nth-child(2) i { color: var(--in-stock-color); }
+.summary-card:nth-child(3) i, .alert-card p { color: var(--low-stock-color); }
+.summary-card:nth-child(3) { border: 2px solid var(--low-stock-color); } 
+
+.summary-card h5 {
+    color: var(--dark-text);
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.summary-card p {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary); 
+}
+
+
+/* =================================================================
+   3. FILTER/ACTION SECTION 
+   (Unchanged from previous version)
+   ================================================================= */
+
+.filter-section {
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-start; 
+    align-items: flex-start;
+    margin-bottom: 25px;
+    padding: 15px;
+    border: 1px solid var(--light-green);
+    border-radius: 8px;
+    background-color: var(--secondary); 
+    flex-shrink: 0; 
+}
+
+.filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* SEARCH BAR FIX: Use flex on the container for alignment */
+.search-bar {
+    display: flex;
+    align-items: center; /* Vertically centers the icon and the input */
+    gap: 10px; /* Adds space between the icon and the input */
+    flex-grow: 1; 
+    max-width: 400px;
+    border: 1px solid var(--accent); /* Border on the container */
+    border-radius: 8px; 
+    padding: 0 10px; /* Internal padding */
+    background-color: var(--secondary);
+}
+
+#product-search {
+    padding: 10px 0; /* Adjust vertical padding */
+    border: none; /* Remove border from the input itself */
+    width: 100%;
+    font-size: 1rem;
+}
+
+
+.inventory-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: auto; 
+}
+
+.action-btn {
+    background-color: var(--primary);
+    color: var(--secondary);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.action-btn:hover {
+    background-color: var(--accent);
+}
+
+.export-btn {
+    background-color: var(--accent); 
+    color: var(--secondary);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.export-btn:hover {
+    background-color: var(--primary);
+}
+
+
+/* =================================================================
+   4. INVENTORY TABLE 
+   (Unchanged from previous version)
+   ================================================================= */
+
+/* KEY FIX 1: Make this the flex parent for the fixed header and scrollable body */
+.table-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Take all remaining vertical space in primary-content */
+    background-color: var(--secondary);
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    overflow: hidden; /* Needed to contain scrollable children */
+}
+
+/* Table Header (Fixed) - ensures it doesn't shrink */
+#inventory-header-table {
+    flex-shrink: 0; 
+}
+
+/* KEY FIX 2: Scrollable Body Container */
+#table-body-scroll-container {
+    flex-grow: 1; /* Take all remaining vertical space */
+    height: 0; /* CRUCIAL for flex-grow to calculate remaining space correctly */
+    overflow-y: auto; /* Enable vertical scrolling */
+    background-color: var(--secondary); 
+}
+
+/* Ensure both tables have the same fixed layout */
+#inventory-header-table, #inventory-body-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; 
+}
+
+/* FIX: Consistent Column Width Definitions */
+#inventory-header-table th:nth-child(1), #inventory-body-table td:nth-child(1) { width: 5%; }    /* ID */
+#inventory-header-table th:nth-child(2), #inventory-body-table td:nth-child(2) { width: 25%; }   /* Name */
+#inventory-header-table th:nth-child(3), #inventory-body-table td:nth-child(3) { width: 20%; }   /* Category */
+#inventory-header-table th:nth-child(4), #inventory-body-table td:nth-child(4) { width: 10%; }   /* Price */
+#inventory-header-table th:nth-child(5), #inventory-body-table td:nth-child(5) { width: 10%; }   /* Stock */
+#inventory-header-table th:nth-child(6), #inventory-body-table td:nth-child(6) { width: 15%; }   /* Status */
+#inventory-header-table th:nth-child(7), #inventory-body-table td:nth-child(7) { width: 15%; }   /* Actions */
+
+#inventory-header-table th, #inventory-body-table td {
+    padding: 12px 15px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+#inventory-header-table thead th {
+    background-color: var(--primary); 
+    color: var(--secondary);
+    font-weight: 600;
+    height: var(--table-header-height);
+}
+
+#inventory-body-table td {
+    border-bottom: 1px solid var(--light-green);
+    white-space: normal; 
+    word-break: break-word;
+}
+#inventory-body-table tbody td:nth-child(1) {
+    white-space: nowrap; 
+}
+
+
+#inventory-body-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+#inventory-body-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* --- Stock Status Badges --- */
+.stock-badge {
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--secondary);
+    white-space: nowrap;
+    text-align: center;
+    width: 120px;
+}
+
+.stock-high { 
+    background-color: var(--in-stock-color); 
+}
+.stock-low { 
+    background-color: var(--low-stock-color); 
+    color: var(--dark-text); 
+}
+.stock-out { 
+    background-color: var(--out-of-stock-color); 
+}
+
+.edit-btn, .delete-btn {
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 0.9rem;
+    margin-right: 5px;
+}
+
+.edit-btn {
+    background-color: var(--accent);
+    color: var(--secondary);
+    border: none;
+}
+.edit-btn:hover {
+    background-color: var(--primary);
+}
+
+.delete-btn {
+    background-color: var(--out-of-stock-color);
+    color: var(--secondary);
+    border: none;
+}
+.delete-btn:hover {
+    background-color: #a02d39; 
+}
+
+
+/* =================================================================
+   5. MODAL STYLING (Add/Edit and Delete)
+   ================================================================= */
+
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: var(--secondary); 
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+/* Style for the smaller delete confirmation modal */
+.modal-content.small-modal {
+    max-width: 350px;
+}
+
+.modal-content h4 {
+    color: var(--primary); 
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--primary); 
+    padding-bottom: 10px;
+}
+
+.modal-content label {
+    color: var(--primary);
+    font-weight: 600;
+    display: block; 
+    margin-bottom: 5px;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="number"],
+.modal-content select { 
+    background-color: var(--secondary);
+    border: 1px solid var(--primary); 
+    padding: 10px;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box; 
+    margin-top: 5px;
+    margin-bottom: 15px;
+    color: var(--dark-text);
+}
+
+#product-form p {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+#product-form p:last-of-type {
+    margin-bottom: 20px;
+}
+
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    z-index: 10;
+}
+
+.close-btn:hover {
+    color: var(--out-of-stock-color);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =================================================================
+   6. TOAST NOTIFICATIONS - NEW STYLES
+   ================================================================= */
+
+#toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1100; /* Above modals */
+}
+
+.toast {
+    background-color: var(--secondary);
+    color: var(--dark-text);
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    margin-top: 10px;
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+    transform: translateX(100%);
+    min-width: 250px;
+    max-width: 350px;
+    border-left: 5px solid;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast i {
+    font-size: 1.5rem;
+}
+
+.toast-success {
+    border-left-color: var(--toast-success);
+}
+.toast-success i {
+    color: var(--toast-success);
+}
+
+.toast-error {
+    border-left-color: var(--toast-error);
+}
+.toast-error i {
+    color: var(--toast-error);
+}
+
+.toast-info {
+    border-left-color: var(--toast-info);
+}
+.toast-info i {
+    color: var(--toast-info);
+}
+
+/* =================================================================
+   7. MEDIA QUERY (Mobile Responsiveness)
+   (Unchanged from previous version)
+   ================================================================= */
+@media (max-width: 768px) {
+    .main {
+        padding-left: 0;
+    }
+
+    .sidebar {
+        display: none; 
+    }
+
+    .summary-cards-container {
+        flex-direction: column;
+    }
+
+    .summary-card {
+        min-width: 100%;
+    }
+
+    .filter-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    /* Adjust search bar for mobile */
+    .search-bar {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .inventory-actions {
+        flex-direction: column;
+        width: 100%;
+        margin-left: 0;
+        gap: 10px;
+    }
+
+    .action-btn, .export-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* =================================================================
+   8. CATEGORY MODAL STYLING (NEW SECTION)
+   ================================================================= */
+
+/* Style for category list items */
+#category-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--light-green);
+    font-size: 1rem;
+}
+
+#category-list li:hover {
+    background-color: #f9f9f9;
+}
+
+.delete-category-btn {
+    background-color: var(--out-of-stock-color);
+    color: var(--secondary);
+    border: none;
+    padding: 5px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+}
+
+.delete-category-btn:hover {
+    background-color: #a02d39; 
+}
+
+/* Ensure the category list scroll container looks neat */
+.category-list-container {
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 10px;
+    background-color: var(--background);
+}

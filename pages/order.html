@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Page</title>
+    <link rel="stylesheet" href="order.css">
+</head>
+<body>
+    <div class="main">
+        <div class="sidebar">
+            <div class="sidebar-content">
+                <h2>Latik Delights</h2>
+                <div id="welcome-section">
+                    <p>Welcome! <span id="user-name"></span></p>
+                </div>
+                <div class="sidebar-buttons">
+                    <button class="sidebar-btn active-btn" id="create-order-btn">Create Order</button> 
+                    <button class="sidebar-btn" id="manage-orders-btn">Manage Orders</button> 
+                    <button class="sidebar-btn" id="sales-history-btn">Sales History</button>
+                    <button class="sidebar-btn" id="inventory-btn">Inventory</button>
+                    <button class="sidebar-btn log-out-btn" id="log-out-btn">Log Out</button> 
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            
+            <div class="content-box">
+                <div class="content-header">
+                    <div class="content-header-title">
+                        <h3>Create New Order</h3>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <div class="search-input-container">
+                        <input type="text" id="product-search" placeholder="Search products...">
+                    </div>
+
+                    <div class="filter-options">
+                        <label for="filter-dropdown">Sort By:</label>
+                        <select id="filter-dropdown">
+                            <option value="top-selling">Top Selling</option>
+                            <option value="low-to-high">Price: Low to High</option>
+                            <option value="high-to-low">Price: High to Low</option>
+                            <option value="name-asc">Name: A-Z</option>
+                        </select>
+                    </div>
+
+                    <div class="view-toggle">
+                        <button id="card-view" class="active-view">Card View</button>
+                        <button id="table-view">Table View</button>
+                    </div>
+                </div>
+
+                <div class="primary-content">
+                    <div class="content-container-section-header">
+                        <h4>Available Products</h4>
+                    </div>
+                    <div class="products-content"> 
+                        <div id="products-list">
+                            <table id="table-view-content" class="hidden">
+                                <thead>
+                                    <tr>
+                                        <th>Product Name</th>
+                                        <th>Price</th>
+                                        <th>Stock</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    </tbody>
+                            </table>
+                            <div id="card-view-content" class="product-cards-grid">
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            
+            <div class="order-summary-box">
+                <div class="summary-header">
+                    <h4>🛒 Order Summary</h4>
+                </div>
+                <div class="summary-body" id="cart-items-container">
+                    <p class="empty-cart-message">Your cart is empty. Add products to start an order.</p>
+                </div>
+                <div class="summary-footer">
+                    <div class="customer-input-container">
+                        <label for="customer-name">Customer Name</label>
+                        <input type="text" id="customer-name" placeholder="Enter Name" autocomplete="off">
+                    </div>
+                    <div class="summary-total">
+                        <span>Total:</span>
+                        <span id="order-total-price">₱0.00</span> 
+                    </div>
+                    <button class="checkout-btn" id="process-order-btn">Process Order</button>
+                </div>
+            </div> 
+            
+        </div> 
+    </div>
+    
+    <script src="order.js"></script> 
+    <script>
+        // --- Sidebar Navigation Logic ---
+        document.getElementById('create-order-btn').addEventListener('click', () => { window.location.href = 'order.html'; });
+        document.getElementById('manage-orders-btn').addEventListener('click', () => { window.location.href = 'manage_orders.html'; });
+        document.getElementById('sales-history-btn').addEventListener('click', () => { window.location.href = 'sales_history.html'; });
+        document.getElementById('inventory-btn').addEventListener('click', () => { window.location.href = 'inventory.html'; });
+        document.getElementById('log-out-btn').addEventListener('click', () => { window.location.href = '../controllers/logout.php'; });
+
+        // --- Session check script (kept inline for PHP pathing simplicity) ---
+        fetch('/LatikDelights/controllers/check_session.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    document.getElementById('user-name').innerText = data.username;
+                } else {
+                    window.location.href = '/LatikDelights/pages/login.html';
+                }
+            })
+            .catch(error => {
+                console.log('Error checking session:', error);
+                window.location.href = '/LatikDelights/pages/login.html';
+            });
+    </script>
+</body>
+</html>

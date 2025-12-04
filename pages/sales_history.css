@@ -1,0 +1,596 @@
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Root variables for colors */
+:root {
+    --primary: #55844E; /* Dark Green - Sidebar background, main buttons */
+    --secondary: #FFFFFF; /* White - General background, card background */
+    --accent: #67A15F; /* Medium Green - Accent color, table borders */
+    --background: #F0F0F0; /* Light Gray - Page background */
+    --light-green: #cee5cb; /* Very Light Green - Products section background */
+    --dark-text: #333333; /* Dark text color */
+    
+    /* Specific Sales Colors */
+    --revenue-color: #007bff; /* Blue for Total Revenue */
+    --order-color: #28a745; /* Green for Total Orders */
+    --avg-color: #ffc107; /* Yellow for Avg Sales */
+    --danger: #dc3545; /* Red for cancelled orders/alerts */
+    --table-header-height: 50px; /* Define header height for calculation */
+}
+
+body{
+    background-color: var(--background);
+}
+
+/* --- MAIN LAYOUT (Consistent with order.css) --- */
+
+.main {
+    display: flex;
+    height: 100vh;
+    width: 100vw; 
+    background-color: var(--background);
+    padding-left: 250px; /* Leave space for sidebar */
+}
+
+/* ... (Sidebar styles remain the same) ... */
+
+.sidebar {
+    width: 250px;
+    background-color: var(--primary);
+    color: var(--secondary);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.sidebar h2 {
+    color: var(--secondary);
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+#welcome-section {
+    margin-bottom: 20px;
+    font-size: 1rem;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    text-align: center;
+}
+
+.sidebar-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 25%;
+}
+
+.sidebar-btn {
+    background-color: var(--secondary);
+    color: var(--primary);
+    border: 1px solid var(--secondary);
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1.1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-weight: 500;
+}
+
+.sidebar-btn:hover:not(.active-btn) {
+    background-color: var(--accent);
+    color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+.sidebar-btn.active-btn {
+    background-color: var(--accent) !important;
+    color: var(--secondary) !important;
+    border-color: var(--secondary) !important;
+}
+
+.log-out-btn {
+    margin-top: 30px;
+    background-color: var(--secondary); 
+    color: var(--primary);
+    border-color: var(--secondary);
+}
+
+.log-out-btn:hover {
+    background-color: var(--accent);
+    color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+/* Content styles - Adjusted for single column layout */
+.content {
+    flex: 1; /* Takes up all remaining space */
+    padding: 20px;
+    background-color: var(--background);
+    display: flex; 
+    flex-direction: column; 
+    width: 100%; 
+}
+
+/* Content Box (The main container for the dashboard) */
+.content-box {
+    flex-grow: 1; 
+    width: 100%; 
+    background-color: var(--secondary);
+    min-height: calc(100vh - 40px); 
+    padding: 0;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.content-header {
+    width: 100%;
+    background-color: var(--primary);
+    color: var(--secondary);
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.content-header-title h3 {
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+/* Products Section - renamed to Orders/Sales content holder */
+.primary-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 20px; /* Padding inside the content area, after the header */
+}
+
+/* Style the Header for Order Transactions */
+.content-container-section-header {
+    background-color: var(--primary); /* Title background to Primary */
+    color: var(--secondary); /* Text color to Secondary */
+    margin-bottom: 0; /* Remove bottom margin to align with header table */
+    border-radius: 8px 8px 0 0; /* Match table rounded corners */
+    padding: 15px 20px;
+}
+.content-container-section-header h4 {
+    margin: 0; /* Remove default h4 margin */
+    font-size: 1.4rem;
+}
+
+
+/* --- SALES HISTORY SPECIFIC STYLES --- */
+
+/* 1. Summary Cards (Same) */
+.summary-cards-container {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 10px 0;
+    flex-wrap: wrap; 
+}
+
+.summary-card {
+    background-color: var(--background); 
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex: 1;
+    min-width: 250px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.summary-card i {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.summary-card:nth-child(1) i { color: var(--revenue-color); }
+.summary-card:nth-child(2) i { color: var(--order-color); }
+.summary-card:nth-child(3) i { color: var(--avg-color); }
+
+.summary-card h5 {
+    color: var(--dark-text);
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.summary-card p {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+
+/* 2. Filter Section (Same) */
+.filter-section {
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-start; 
+    align-items: flex-start;
+    margin-bottom: 25px;
+    padding: 15px;
+    border: 1px solid var(--light-green);
+    border-radius: 8px;
+    background-color: var(--secondary); 
+}
+
+/* Wrapper for the main controls (filters, search, export) */
+.filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.date-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+}
+
+.date-filters input[type="date"] {
+    padding: 8px;
+    background-color: var(--secondary); 
+    border: 1px solid var(--primary); 
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.date-filters label {
+    font-weight: 500;
+    color: var(--dark-text);
+}
+
+.apply-filter-btn {
+    background-color: var(--primary);
+    color: var(--secondary);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-right: 0; 
+}
+
+.apply-filter-btn:hover {
+    background-color: var(--accent);
+}
+
+/* Container for search and export button */
+.search-and-export {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-left: auto; /* Push to the right */
+}
+
+.search-input-container {
+    flex-grow: 0; 
+}
+
+.search-input-container input[type="text"] {
+    padding: 8px 12px;
+    border: 1px solid var(--primary);
+    border-radius: 4px;
+    width: 250px;
+    font-size: 1rem;
+}
+
+/* NEW: Wrapper for filename input and export button */
+.export-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* NEW: Styling for the Filename Input */
+#export-filename {
+    padding: 8px 12px;
+    border: 1px solid var(--primary);
+    border-radius: 4px;
+    width: 150px; 
+    font-size: 1rem;
+    color: var(--dark-text);
+}
+
+/* Export to CSV Button Styling - MODIFIED ICON AND COLOR */
+.export-btn {
+    background-color: var(--accent); /* Using Accent for general file download */
+    color: var(--secondary);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.export-btn:hover:not(:disabled) {
+    background-color: var(--primary); /* Hover to Primary */
+}
+
+.export-btn:disabled {
+    background-color: #a9a9a9;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Export Feedback Message Styling */
+.feedback-message {
+    padding: 10px 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    width: 100%; /* Full width for the message */
+    margin-top: 10px;
+}
+
+/* 3. Sales Table (New Scrolling Structure) */
+
+.orders-content {
+    /* Set a specific display for the container to hold the two tables */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; 
+    background-color: var(--secondary);
+    border-radius: 0 0 8px 8px; /* Round only the bottom corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    overflow: hidden; /* Important for containing the tables */
+}
+
+/* --- SCROLLING FIX: This container holds the rows and is scrollable --- */
+#table-body-scroll-container {
+    /* Key to scrolling: Set a max-height (vh is viewport height) */
+    /* Adjust this value as needed based on your dashboard layout */
+    max-height: 40vh; 
+    overflow-y: auto; /* KEY: Enables vertical scrolling for the body */
+    background-color: var(--secondary); 
+}
+/* ------------------------------------------------------------------------ */
+
+
+/* Target both tables for consistent styling and width */
+#sales-header-table, #sales-body-table {
+    width: 100%;
+    border-collapse: collapse;
+    /* Use table-layout: fixed to ensure column widths match precisely */
+    table-layout: fixed; 
+}
+
+/* Ensure the cells of both tables share styling */
+#sales-header-table th, #sales-body-table td {
+    padding: 12px 15px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+/* Styling for the fixed header */
+#sales-header-table thead th {
+    background-color: var(--primary); 
+    color: var(--secondary);
+    font-weight: 600;
+    height: var(--table-header-height);
+}
+
+/* Styling for the rows */
+#sales-body-table td {
+    /* Only apply border to body cells */
+    border-bottom: 1px solid var(--light-green);
+}
+
+#sales-body-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Remove the bottom border from the last row for a cleaner look */
+#sales-body-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--secondary);
+    white-space: nowrap;
+}
+/* ... (Status badge colors and other styles remain the same) ... */
+.status-completed { background-color: #28a745; }
+.status-pending-payment { background-color: #ffc107; }
+.status-paid { background-color: #007bff; }
+.status-processing { background-color: #17a2b8; }
+.status-cancelled { background-color: var(--danger); }
+
+.details-btn {
+    background-color: var(--accent);
+    color: var(--secondary);
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.details-btn:hover {
+    background-color: var(--primary);
+}
+/* ... (Rest of CSS remains the same) ... */
+
+
+#empty-sales-message {
+    text-align: center;
+    color: #999;
+    padding: 50px;
+    font-size: 1.1rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- MODAL STYLING --- (Same) */
+
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: var(--secondary);
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+.modal-content h4 {
+    color: var(--primary);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--light-green);
+    padding-bottom: 10px;
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: var(--danger);
+    text-decoration: none;
+}
+
+#details-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#details-table th, #details-table td {
+    padding: 10px;
+    border: 1px solid var(--light-green);
+}
+
+#details-table tfoot td {
+    font-weight: 700;
+    background-color: var(--light-green);
+    text-align: right;
+}
+
+#details-grand-total {
+    text-align: left !important;
+    color: var(--primary);
+}
+
+/* Media Query for Mobile Responsiveness (Same) */
+@media (max-width: 768px) {
+    .main {
+        padding-left: 0;
+    }
+
+    .sidebar {
+        display: none; 
+    }
+
+    .content-box {
+        min-height: auto;
+    }
+
+    .summary-cards-container {
+        flex-direction: column;
+    }
+
+    .summary-card {
+        min-width: 100%;
+    }
+
+    .filter-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .date-filters {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+    .date-filters label, .date-filters input {
+        width: 100%;
+    }
+
+    .search-and-export {
+        flex-direction: column;
+        width: 100%;
+        margin-left: 0;
+        gap: 15px;
+    }
+
+    .search-input-container input[type="text"] {
+        width: 100%;
+    }
+    
+    /* Mobile styles for the new export controls */
+    .export-controls {
+        flex-direction: column; 
+        width: 100%;
+        gap: 15px;
+    }
+
+    #export-filename {
+        width: 100%;
+    }
+
+    .export-btn, .apply-filter-btn {
+        width: 100%;
+    }
+}
